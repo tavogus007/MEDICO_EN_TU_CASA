@@ -14,7 +14,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import  { Agenda } from './entities/agenda.entity';
 import { RutaController } from './controllers/mec_ruta/ruta.controller';
 import { AuthModule } from './controllers/auth/auth.module';
-import { AppAuthService } from './services/auth.service';
+import { AuthService } from './services/auth.service';
 
 @Module({
   imports: [
@@ -43,12 +43,8 @@ import { AppAuthService } from './services/auth.service';
     //ConfigurablesModule,
   ],
   controllers: [
-    AppController,
-    //AgendaController,
-    FormularioController,
-    HistorialController,
-    RutaController
+    AppController
   ],
-  providers: [AppService, RutaService, HistorialService, AppAuthService],
+  providers: [AppService],
 })
 export class AppModule {}

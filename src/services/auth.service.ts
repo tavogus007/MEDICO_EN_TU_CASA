@@ -5,7 +5,7 @@ import { EntityManager } from 'typeorm';
 import { AuthDto } from '../dtos/auth.dto';
 
 @Injectable()
-export class AppAuthService {
+export class AuthService {
     constructor(
         @InjectEntityManager() private entityManager: EntityManager,
         private configService: ConfigService,

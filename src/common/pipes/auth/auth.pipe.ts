@@ -1,7 +1,7 @@
 import { ArgumentMetadata, HttpException, HttpStatus, Injectable, PipeTransform } from '@nestjs/common';
 
 @Injectable()
-export class ValidateAuthPipe implements PipeTransform {
+export class AuthPipe implements PipeTransform {
   transform(value: any, metadata: ArgumentMetadata) {
     console.log(value);
     
