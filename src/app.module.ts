@@ -6,11 +6,11 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 
 //import { AgendaService } from './services/agenda.service';
 
-import { AgendaModule } from './controllers/mec_agenda/agenda/agenda.module';
+import { AgendaModule } from './agenda/agenda.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Agenda } from './entities/agenda.entity';
+import { Agenda } from './agenda/entities/agenda.entity';
 
-import { AuthModule } from './controllers/auth/auth.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
