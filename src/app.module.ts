@@ -3,18 +3,14 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 //import { ConfigurablesModule } from './configurables/configurables.module'; // Ensure this path is correct or create the module if it does not exist
-import { AgendaController } from './controllers/mec_agenda/agenda/agenda.controller';
-import { FormularioController } from './controllers/mec_agenda/formulario/formulario.controller';
-import { HistorialController } from './controllers/mec_historial/historial.controller';
+
 //import { AgendaService } from './services/agenda.service';
-import { RutaService } from './services/ruta.service';
-import { HistorialService } from './services/historial.service';
+
 import { AgendaModule } from './controllers/mec_agenda/agenda/agenda.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import  { Agenda } from './entities/agenda.entity';
-import { RutaController } from './controllers/mec_ruta/ruta.controller';
+import { Agenda } from './entities/agenda.entity';
+
 import { AuthModule } from './controllers/auth/auth.module';
-import { AuthService } from './services/auth.service';
 
 @Module({
   imports: [
@@ -32,9 +28,7 @@ import { AuthService } from './services/auth.service';
         password: configService.get<string>('DB_PASSWORD'),
         database: configService.get<string>('DB_DATABASE'),
         schema: 'medico_en_tu_casa',
-        entities: [
-          Agenda
-        ],
+        entities: [Agenda],
         synchronize: false, // solo en modo desarrollo
       }),
     }),
@@ -42,9 +36,7 @@ import { AuthService } from './services/auth.service';
     AuthModule,
     //ConfigurablesModule,
   ],
-  controllers: [
-    AppController
-  ],
+  controllers: [AppController],
   providers: [AppService],
 })
 export class AppModule {}
