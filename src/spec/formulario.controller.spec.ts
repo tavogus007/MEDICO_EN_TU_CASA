@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { FormularioController } from './formulario.controller';
+import { FormularioController } from '../agenda/controllers/formulario.controller';
 
 describe('FormularioController', () => {
   let controller: FormularioController;

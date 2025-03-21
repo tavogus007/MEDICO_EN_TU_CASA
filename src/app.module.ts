@@ -1,24 +1,34 @@
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-//import { ConfigurablesModule } from './configurables/configurables.module'; // Ensure this path is correct or create the module if it does not exist
-
-//import { AgendaService } from './services/agenda.service';
-
-import { AgendaModule } from './controllers/mec_agenda/agenda/agenda.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { Agenda } from './entities/agenda.entity';
+import * as Joi from 'joi';
 
-import { AuthModule } from './controllers/auth/auth.module';
+import { AppController } from './app.controller';
+import { AgendaModule } from './agenda/agenda.module';
+import { Agenda } from './agenda/entities/agenda.entity';
+import { AppService } from './app.service';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
+      envFilePath: '.env',
       isGlobal: true, // Hace que el módulo esté disponible en toda la aplicación
     }),
     TypeOrmModule.forRootAsync({
-      imports: [ConfigModule],
+      imports: [
+        ConfigModule.forRoot({
+          envFilePath: '.env',
+          isGlobal: true,
+          validationSchema: Joi.object({
+            DB_HOST: Joi.string().required(),
+            DB_PORT: Joi.number().required(),
+            DB_USERNAME: Joi.string().required(),
+            DB_PASSWORD: Joi.string().required(),
+            DB_DATABASE: Joi.string().required(),
+          }),
+        }),
+      ],
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => ({
         type: 'postgres',

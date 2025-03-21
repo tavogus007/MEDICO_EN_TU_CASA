@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { AgendaController } from './agenda.controller';
+import { AgendaController } from '../agenda/controllers/agenda.controller';
 
 describe('AgendaController', () => {
   let controller: AgendaController;
