@@ -40,6 +40,6 @@ export class CreateAgendaDto {
   @ApiProperty({ description: 'Código de la ficha', example: 'FICHA123' })
   age_cod_ficha: string;
 
-  @ApiProperty({ description: 'Indica si es mañana o tarde', example: true })
+  @ApiProperty({ description: 'Indica si es mañana o tarde', example: false })
   age_m_a: boolean;
 }
