@@ -3,10 +3,9 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import * as Joi from 'joi';
 
-import { AppController } from './app.controller';
 import { AgendaModule } from './agenda/agenda.module';
 import { Agenda } from './agenda/entities/agenda.entity';
-import { AppService } from './app.service';
+import { FormDiagnostico } from './agenda/entities/formulario.entity';
 import { AuthModule } from './auth/auth.module';
 
 @Module({
@@ -38,15 +37,14 @@ import { AuthModule } from './auth/auth.module';
         password: configService.get<string>('DB_PASSWORD'),
         database: configService.get<string>('DB_DATABASE'),
         schema: 'medico_en_tu_casa',
-        entities: [Agenda],
+        entities: [Agenda, FormDiagnostico],
         synchronize: false, // solo en modo desarrollo
       }),
     }),
     AgendaModule,
     AuthModule,
-    //ConfigurablesModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [],
+  providers: [],
 })
 export class AppModule {}

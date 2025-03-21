@@ -1,8 +1,9 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { Agenda } from '../entities/agenda.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+
 import { UpdateAgendaDto } from '../dtos/agenda/update-agenda.dto';
+import { Agenda } from '../entities/agenda.entity';
 
 @Injectable()
 export class AgendaService {
