@@ -10,6 +10,7 @@ export class Agenda {
   @Column({ type: 'varchar', length: 50 })
   age_historico: string;
 
+  @ApiProperty({ description: 'Historia clinica del paciente' })
   @Column({ type: 'varchar', length: 50 })
   age_historia_clinica: string;
 
