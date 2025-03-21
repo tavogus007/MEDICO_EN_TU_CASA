@@ -7,10 +7,12 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule, { cors: true }); //Poner esto como true, permite que las API se puedan consumir desde otros lugares
 
   const config = new DocumentBuilder()
-    .setTitle('APIs')
-    .setDescription('APIs de Medico en tu casa')
+    .setTitle('DOCUMENTACION DE APIs - MEDICO EN TU CASA')
+    .setDescription(
+      'En esta ventana, se utilizará swagger para documentar las APIs. <br>Esta pertenece a OpenAPI de NestJS, es un formato de definicion de lenguaje agnostico usado para describir RESTful APIs',
+    )
     .setVersion('1.0')
-    .addTag('cats')
+    //.addTag('cats')
     .build();
   const documentFactory = () => SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('docs', app, documentFactory);
