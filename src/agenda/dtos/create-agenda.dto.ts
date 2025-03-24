@@ -42,4 +42,16 @@ export class CreateAgendaDto {
 
   @ApiProperty({ description: 'Indica si es mañana o tarde', example: false })
   age_m_a: boolean;
+
+  @ApiProperty({
+    description: 'Clave foranea hacia admisiones',
+    example: 123,
+  })
+  age_admision_id: number | null;
+
+  @ApiProperty({
+    description: 'Clave foranea hacia trabajo social',
+    example: 123,
+  })
+  age_ts_id: number | null;
 }
