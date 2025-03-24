@@ -11,8 +11,8 @@ import { ApiTags, ApiOperation, ApiParam } from '@nestjs/swagger';
 
 import { Agenda } from '../entities/agenda.entity';
 import { AgendaService } from '../services/agenda.service';
-import { CreateAgendaDto } from '../dtos/agenda/create-agenda.dto';
-import { UpdateAgendaDto } from '../dtos/agenda/update-agenda.dto';
+import { CreateAgendaDto } from '../dtos/create-agenda.dto';
+import { UpdateAgendaDto } from '../dtos/update-agenda.dto';
 
 @ApiTags('Agenda del paciente')
 @Controller('agenda')
@@ -23,6 +23,11 @@ export class AgendaController {
   @ApiOperation({ summary: 'Listar todas las agendas' })
   async findAll(): Promise<Agenda[]> {
     return await this.agendaService.findAll();
+  }
+
+  @Get(':id')
+  findOne(@Param('id') id: number) {
+    return this.agendaService.findOne(id);
   }
 
   @Post()

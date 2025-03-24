@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
-import { UpdateAgendaDto } from '../dtos/agenda/update-agenda.dto';
+import { UpdateAgendaDto } from '../dtos/update-agenda.dto';
 import { Agenda } from '../entities/agenda.entity';
 
 @Injectable()
@@ -13,7 +13,15 @@ export class AgendaService {
   ) {}
 
   async findAll(): Promise<Agenda[]> {
-    return await this.agendaRepository.find();
+    return await this.agendaRepository.find({
+      relations: ['admision', 'trabSoc'],
+    });
+  }
+
+  async findOne(id: number): Promise<Agenda> {
+    return this.agendaRepository.findOne({
+      where: { age_id: id },
+    });
   }
 
   async create(data: Partial<Agenda>): Promise<Agenda> {

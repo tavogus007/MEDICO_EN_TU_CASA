@@ -2,7 +2,7 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
-import { UpdateFormDto } from '../dtos//formulario/update-formulario.dto';
+import { UpdateFormDto } from '../dtos/update-formulario.dto';
 import { FormDiagnostico } from '../entities/formulario.entity';
 
 @Injectable()

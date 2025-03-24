@@ -11,8 +11,8 @@ import { ApiTags, ApiOperation, ApiParam } from '@nestjs/swagger';
 
 import { FormDiagnostico } from '../entities/formulario.entity';
 import { FormularioService } from '../services/formulario.service';
-import { CreateFormDto } from '../dtos/formulario/create-formulario.dto';
-import { UpdateFormDto } from '../dtos/formulario/update-formulario.dto';
+import { CreateFormDto } from '../dtos/create-formulario.dto';
+import { UpdateFormDto } from '../dtos/update-formulario.dto';
 
 @ApiTags('formulario de un paciente')
 @Controller('formulario')

@@ -63,4 +63,7 @@ export class UpdateAgendaDto {
     required: false,
   })
   age_m_a?: boolean;
+
+  @ApiProperty({ description: 'Clave foranea hacia admisiones', example: 123 })
+  age_admision_id: number;
 }
