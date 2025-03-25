@@ -6,8 +6,9 @@ import * as Joi from 'joi';
 import { AuthModule } from './auth/auth.module';
 import { PersonaModule } from './persona/persona.module';
 import { Persona } from './persona/entities/persona.entity';
-import { MacrodistritoModule } from './geografico/macrodistrito.module';
+import { GeograficoModule } from './geografico/geografico.module';
 import { Macrodistrito } from './geografico/entities/macrodistrito.entity';
+import { Distrito } from './geografico/entities/distrito.entity';
 
 @Module({
   imports: [
@@ -38,13 +39,13 @@ import { Macrodistrito } from './geografico/entities/macrodistrito.entity';
         password: configService.get<string>('DB_PASSWORD'),
         database: configService.get<string>('DB_DATABASE'),
         schema: 'medico_en_tu_casa',
-        entities: [Persona, Macrodistrito],
+        entities: [Persona, Macrodistrito, Distrito],
         synchronize: false, // solo en modo desarrollo
       }),
     }),
     AuthModule,
     PersonaModule,
-    MacrodistritoModule,
+    GeograficoModule,
   ],
   controllers: [],
   providers: [],
