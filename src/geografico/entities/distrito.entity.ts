@@ -5,10 +5,13 @@ import {
   Entity,
   JoinColumn,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+
 import { Macrodistrito } from './macrodistrito.entity';
+import { Zona } from './zona.entity';
 
 @Entity('mec_distrito', { schema: 'medico_en_tu_casa_v2' })
 export class Distrito {
@@ -20,7 +23,7 @@ export class Distrito {
     name: 'dist_nro',
     type: 'int',
   })
-  distNro: Number;
+  distNro: number;
 
   @CreateDateColumn({
     name: 'dist_registrado',
@@ -51,4 +54,9 @@ export class Distrito {
   @JoinColumn({ name: 'macro_id' })
   @ApiProperty({ type: () => Macrodistrito })
   macrodistrito: Macrodistrito;
+
+  // Relación One-to-Many con Zona
+  @ApiProperty({ type: () => Zona })
+  @OneToMany(() => Zona, (zona) => zona.distrito)
+  zonas: Zona[];
 }

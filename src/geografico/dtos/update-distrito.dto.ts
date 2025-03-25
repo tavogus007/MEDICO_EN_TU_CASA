@@ -11,8 +11,4 @@ export class UpdateDistritoDto extends PartialType(CreateDistritoDto) {
   @IsOptional()
   @IsIn(['A', 'I'])
   distEstado?: string;
-
-  @IsOptional()
-  @IsInt()
-  macroId?: number;
 }

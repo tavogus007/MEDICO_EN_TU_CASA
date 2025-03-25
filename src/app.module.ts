@@ -9,6 +9,7 @@ import { Persona } from './persona/entities/persona.entity';
 import { GeograficoModule } from './geografico/geografico.module';
 import { Macrodistrito } from './geografico/entities/macrodistrito.entity';
 import { Distrito } from './geografico/entities/distrito.entity';
+import { Zona } from './geografico/entities/zona.entity';
 
 @Module({
   imports: [
@@ -39,7 +40,7 @@ import { Distrito } from './geografico/entities/distrito.entity';
         password: configService.get<string>('DB_PASSWORD'),
         database: configService.get<string>('DB_DATABASE'),
         schema: 'medico_en_tu_casa',
-        entities: [Persona, Macrodistrito, Distrito],
+        entities: [Persona, Macrodistrito, Distrito, Zona],
         synchronize: false, // solo en modo desarrollo
       }),
     }),
