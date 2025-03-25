@@ -23,13 +23,10 @@ export class Persona {
   @UpdateDateColumn({
     name: 'pers_modificado',
     type: 'timestamptz',
-    nullable: true,
-    transformer: {
-      to: (value: Date) => value, // Se guarda como UTC
-      from: (value: Date) => new Date(value), // Se convierte al leer
-    },
+    default: () => 'CURRENT_TIMESTAMP',
+    onUpdate: 'CURRENT_TIMESTAMP',
   })
-  persModificado: Date | null;
+  pers_modificado: Date;
 
   @ApiProperty({ description: 'Estado' })
   @Column('char', { name: 'pers_estado', default: 'A', length: 1 })
