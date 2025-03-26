@@ -13,6 +13,10 @@ import { Zona } from './geografico/entities/zona.entity';
 import { SistemaModule } from './sistema/sistema.module';
 import { SiisWeb } from './sistema/entities/siis.entity';
 import { Igob } from './sistema/entities/igob.entity';
+import { VehiculoModule } from './vehiculo/vehiculo.module';
+import { Vehiculo } from './vehiculo/entities/vehiculo.entity';
+import { SmartwatchModule } from './smartwatch/smartwatch.module';
+import { Smartwatch } from './smartwatch/entities/smartwatch.entity';
 
 @Module({
   imports: [
@@ -43,7 +47,16 @@ import { Igob } from './sistema/entities/igob.entity';
         password: configService.get<string>('DB_PASSWORD'),
         database: configService.get<string>('DB_DATABASE'),
         schema: 'medico_en_tu_casa',
-        entities: [Persona, Macrodistrito, Distrito, Zona, SiisWeb, Igob],
+        entities: [
+          Persona,
+          Macrodistrito,
+          Distrito,
+          Zona,
+          SiisWeb,
+          Igob,
+          Vehiculo,
+          Smartwatch,
+        ],
         synchronize: false, // solo en modo desarrollo
       }),
     }),
@@ -51,6 +64,8 @@ import { Igob } from './sistema/entities/igob.entity';
     PersonaModule,
     GeograficoModule,
     SistemaModule,
+    VehiculoModule,
+    SmartwatchModule,
   ],
   controllers: [],
   providers: [],
