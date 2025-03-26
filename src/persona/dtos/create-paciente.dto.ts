@@ -5,6 +5,7 @@ import {
   IsString,
   Length,
   IsInt,
+  IsBoolean,
 } from 'class-validator';
 
 export class CreatePacienteDto {
@@ -58,7 +59,7 @@ export class CreatePacienteDto {
   @ApiProperty({
     example: 1,
     description: 'ID de referencia a Mec_igob',
-    required: false,
+    required: true,
   })
   @IsOptional()
   @IsInt()
@@ -81,4 +82,14 @@ export class CreatePacienteDto {
   @IsOptional()
   @IsInt()
   infoDomId?: number;
+
+  @ApiProperty({
+    example: false,
+    description: 'Indica si el paciente solicitó atención domiciliaria',
+    required: false,
+    default: false,
+  })
+  @IsOptional()
+  @IsBoolean()
+  pacAtencionDomicilio?: boolean;
 }

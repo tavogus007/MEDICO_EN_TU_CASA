@@ -11,6 +11,7 @@ import {
 
 @Entity('mec_siis_web', { schema: 'medico_en_tu_casa_v2' })
 export class SiisWeb {
+  @ApiProperty({ description: 'Requerido' })
   @PrimaryGeneratedColumn({ name: 'siis_web_id' })
   siisWebId: number;
 

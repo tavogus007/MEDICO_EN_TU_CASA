@@ -65,15 +65,23 @@ export class Paciente {
   })
   pacCelular: string | null;
 
-  @ManyToOne(() => Igob)
+  @Column({
+    name: 'pac_solicitud_amd',
+    type: 'boolean',
+    default: false,
+    nullable: false,
+  })
+  pacAtencionDomicilio: boolean;
+
+  @ManyToOne(() => Igob, { cascade: true })
   @JoinColumn({ name: 'igob_id' })
   igob: Igob;
 
-  @ManyToOne(() => Smartwatch)
+  @ManyToOne(() => Smartwatch, { cascade: true })
   @JoinColumn({ name: 'smart_id' })
   smartwatch: Smartwatch;
 
-  @ManyToOne(() => InfoDomicilio)
+  @ManyToOne(() => InfoDomicilio, { cascade: true })
   @JoinColumn({ name: 'info_dom_id' })
   infoDomicilio: InfoDomicilio;
 }

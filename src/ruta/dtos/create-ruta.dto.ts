@@ -30,7 +30,7 @@ export class CreateRutaDto {
   rutaDestino: string;
 
   @ApiProperty({
-    example: 30,
+    example: null,
     description: 'Duración aproximada en minutos',
     required: false,
   })
