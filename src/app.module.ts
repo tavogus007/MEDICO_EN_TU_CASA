@@ -10,6 +10,9 @@ import { GeograficoModule } from './geografico/geografico.module';
 import { Macrodistrito } from './geografico/entities/macrodistrito.entity';
 import { Distrito } from './geografico/entities/distrito.entity';
 import { Zona } from './geografico/entities/zona.entity';
+import { SistemaModule } from './sistema/sistema.module';
+import { SiisWeb } from './sistema/entities/siis.entity';
+import { Igob } from './sistema/entities/igob.entity';
 
 @Module({
   imports: [
@@ -40,13 +43,14 @@ import { Zona } from './geografico/entities/zona.entity';
         password: configService.get<string>('DB_PASSWORD'),
         database: configService.get<string>('DB_DATABASE'),
         schema: 'medico_en_tu_casa',
-        entities: [Persona, Macrodistrito, Distrito, Zona],
+        entities: [Persona, Macrodistrito, Distrito, Zona, SiisWeb, Igob],
         synchronize: false, // solo en modo desarrollo
       }),
     }),
     AuthModule,
     PersonaModule,
     GeograficoModule,
+    SistemaModule,
   ],
   controllers: [],
   providers: [],
