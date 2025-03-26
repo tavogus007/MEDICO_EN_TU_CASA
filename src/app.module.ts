@@ -4,12 +4,15 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import * as Joi from 'joi';
 
 import { AuthModule } from './auth/auth.module';
-import { AgendaModule } from './agenda/agenda.module';
-import { Agenda } from './agenda/entities/agenda.entity';
-import { FormDiagnostico } from './agenda/entities/formulario.entity';
-import { AdmisionTrabSocModule } from './adm_ts/admision_trab-soc.module';
-import { Admisiones } from './adm_ts/entities/admisiones.entity';
-import { TrabajoSocial } from './adm_ts/entities/trabajoSoclal.entity';
+import { PersonaModule } from './persona/persona.module';
+import { Persona } from './persona/entities/persona.entity';
+import { GeograficoModule } from './geografico/geografico.module';
+import { Macrodistrito } from './geografico/entities/macrodistrito.entity';
+import { Distrito } from './geografico/entities/distrito.entity';
+import { Zona } from './geografico/entities/zona.entity';
+import { SistemaModule } from './sistema/sistema.module';
+import { SiisWeb } from './sistema/entities/siis.entity';
+import { Igob } from './sistema/entities/igob.entity';
 
 @Module({
   imports: [
@@ -40,13 +43,14 @@ import { TrabajoSocial } from './adm_ts/entities/trabajoSoclal.entity';
         password: configService.get<string>('DB_PASSWORD'),
         database: configService.get<string>('DB_DATABASE'),
         schema: 'medico_en_tu_casa',
-        entities: [Agenda, FormDiagnostico, Admisiones, TrabajoSocial],
+        entities: [Persona, Macrodistrito, Distrito, Zona, SiisWeb, Igob],
         synchronize: false, // solo en modo desarrollo
       }),
     }),
-    AgendaModule,
     AuthModule,
-    AdmisionTrabSocModule,
+    PersonaModule,
+    GeograficoModule,
+    SistemaModule,
   ],
   controllers: [],
   providers: [],

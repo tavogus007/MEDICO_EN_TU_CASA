@@ -22,7 +22,7 @@ export class AgendaService {
     return this.agendaRepository.findOne({
       where: { age_id: id },
     });
-  }
+  } 
 
   async create(data: Partial<Agenda>): Promise<Agenda> {
     const expediente = this.agendaRepository.create(data);
