@@ -1,9 +1,11 @@
+import { Paciente } from 'src/persona/entities/paciente.entity';
 import {
   Entity,
   PrimaryGeneratedColumn,
   Column,
   CreateDateColumn,
   UpdateDateColumn,
+  OneToMany,
 } from 'typeorm';
 
 @Entity({ name: 'mec_smartwatch', schema: 'medico_en_tu_casa_v2' })
@@ -107,4 +109,7 @@ export class Smartwatch {
     nullable: true,
   })
   smartActividadFisica: string | null;
+
+  @OneToMany(() => Paciente, (paciente) => paciente.smartwatch)
+  pacientes: Paciente[];
 }

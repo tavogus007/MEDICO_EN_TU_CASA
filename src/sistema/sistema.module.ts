@@ -12,5 +12,6 @@ import { IgobService } from './services/igob.service';
   imports: [TypeOrmModule.forFeature([SiisWeb, Igob])],
   providers: [SiisService, IgobService],
   controllers: [SiisController, IgobController],
+  exports: [TypeOrmModule, IgobService, SiisService],
 })
 export class SistemaModule {}

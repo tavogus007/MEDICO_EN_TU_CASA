@@ -9,6 +9,6 @@ import { SmartwatchController } from './controllers/smartwatch.controller';
   imports: [TypeOrmModule.forFeature([Smartwatch])],
   providers: [SmartwatchService],
   controllers: [SmartwatchController],
-  exports: [],
+  exports: [TypeOrmModule],
 })
 export class SmartwatchModule {}

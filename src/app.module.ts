@@ -17,6 +17,12 @@ import { VehiculoModule } from './vehiculo/vehiculo.module';
 import { Vehiculo } from './vehiculo/entities/vehiculo.entity';
 import { SmartwatchModule } from './smartwatch/smartwatch.module';
 import { Smartwatch } from './smartwatch/entities/smartwatch.entity';
+import { InfopagoModule } from './infopago/infopago.module';
+import { InformacionPago } from './infopago/entities/infopago.entity';
+import { InfoDomicilio } from './ruta/entities/infodom.entity';
+import { Ruta } from './ruta/entities/ruta.entity';
+import { Paciente } from './persona/entities/paciente.entity';
+import { RutaModule } from './ruta/ruta.module';
 
 @Module({
   imports: [
@@ -56,6 +62,10 @@ import { Smartwatch } from './smartwatch/entities/smartwatch.entity';
           Igob,
           Vehiculo,
           Smartwatch,
+          InformacionPago,
+          InfoDomicilio,
+          Ruta,
+          Paciente,
         ],
         synchronize: false, // solo en modo desarrollo
       }),
@@ -66,6 +76,8 @@ import { Smartwatch } from './smartwatch/entities/smartwatch.entity';
     SistemaModule,
     VehiculoModule,
     SmartwatchModule,
+    InfopagoModule,
+    RutaModule,
   ],
   controllers: [],
   providers: [],

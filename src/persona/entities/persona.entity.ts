@@ -10,7 +10,7 @@ import {
 @Entity('mec_persona', { schema: 'medico_en_tu_casa_v2' })
 export class Persona {
   @PrimaryGeneratedColumn({ name: 'pers_id' })
-  pers_id: number;
+  persId: number;
 
   @CreateDateColumn({
     name: 'pers_registrado',

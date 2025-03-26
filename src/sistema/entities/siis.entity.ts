@@ -1,10 +1,12 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { Ruta } from 'src/ruta/entities/ruta.entity';
 import {
   Entity,
   PrimaryGeneratedColumn,
   Column,
   CreateDateColumn,
   UpdateDateColumn,
+  OneToMany,
 } from 'typeorm';
 
 @Entity('mec_siis_web', { schema: 'medico_en_tu_casa_v2' })
@@ -31,4 +33,7 @@ export class SiisWeb {
   @ApiProperty({ description: 'Estado' })
   @Column('char', { name: 'siis_web_estado', default: 'A', length: 1 })
   siisWebEstado: string;
+
+  @OneToMany(() => Ruta, (ruta) => ruta.siisWeb)
+  rutas: Ruta[];
 }

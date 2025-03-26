@@ -18,7 +18,7 @@ export class PersonaService {
 
   async findOne(id: number): Promise<Persona> {
     return this.personaRepository.findOne({
-      where: { pers_id: id },
+      where: { persId: id },
     });
   }
 
@@ -29,7 +29,7 @@ export class PersonaService {
 
   async update(id: number, data: UpdatePersonaDto): Promise<Persona> {
     const persona = await this.personaRepository.findOne({
-      where: { pers_id: id },
+      where: { persId: id },
     });
     if (!persona) throw new NotFoundException(`Persona ${id} no encontrada`);
 
@@ -39,7 +39,7 @@ export class PersonaService {
 
   async delete(id: number): Promise<void> {
     const persona = await this.personaRepository.findOne({
-      where: { pers_id: id },
+      where: { persId: id },
     });
     if (!persona) {
       throw new NotFoundException(`Persona con ID ${id} no encontrado`);
