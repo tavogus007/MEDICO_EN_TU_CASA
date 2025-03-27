@@ -16,10 +16,6 @@ export class Doctor {
   @PrimaryColumn({ name: 'pers_id' })
   persId: number;
 
-  @ManyToOne(() => Persona)
-  @JoinColumn({ name: 'pers_id' })
-  persona: Persona;
-
   @CreateDateColumn({
     name: 'doc_registrado',
     type: 'timestamp',
@@ -72,4 +68,8 @@ export class Doctor {
   @ManyToOne(() => SiisWeb)
   @JoinColumn({ name: 'siis_web_id' })
   siisWeb: SiisWeb;
+
+  @ManyToOne(() => Persona)
+  @JoinColumn({ name: 'pers_id' })
+  persona: Persona;
 }

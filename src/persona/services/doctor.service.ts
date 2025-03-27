@@ -1,10 +1,13 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository, DataSource } from 'typeorm';
+import { Repository } from 'typeorm';
+
 import { Doctor } from '../entities/doctor.entity';
 import { Persona } from '../entities/persona.entity';
 import { CreateDoctorDto } from '../dtos/create-doctor.dto';
 import { UpdateDoctorDto } from '../dtos/update-doctor.dto';
+import { Vehiculo } from 'src/vehiculo/entities/vehiculo.entity';
+import { SiisWeb } from 'src/sistema/entities/siis.entity';
 
 @Injectable()
 export class DoctorService {
@@ -13,13 +16,15 @@ export class DoctorService {
     private readonly doctorRepository: Repository<Doctor>,
     @InjectRepository(Persona)
     private readonly personaRepository: Repository<Persona>,
-    private readonly dataSource: DataSource,
+    @InjectRepository(Vehiculo)
+    private readonly vehiculoRepository: Repository<Vehiculo>,
+    @InjectRepository(SiisWeb)
+    private readonly siisWebRepository: Repository<SiisWeb>,
   ) {}
 
   async findAll(): Promise<Doctor[]> {
-    return this.doctorRepository.find({
+    return await this.doctorRepository.find({
       relations: ['persona', 'vehiculo', 'siisWeb'],
-      where: { docEstado: 'A' }, // Solo activos por defecto
     });
   }
 
@@ -36,86 +41,60 @@ export class DoctorService {
   }
 
   async create(dto: CreateDoctorDto): Promise<Doctor> {
-    const queryRunner = this.dataSource.createQueryRunner();
-    await queryRunner.connect();
-    await queryRunner.startTransaction();
-
-    try {
-      // Verificar si la persona existe
-      const personaExists = await this.personaRepository.findOneBy({
-        persId: dto.persId,
-      });
-
-      if (!personaExists) {
-        throw new NotFoundException(
-          `Persona con ID ${dto.persId} no encontrada`,
-        );
-      }
-
-      // Verificar si ya existe como doctor
-      const existingDoctor = await this.doctorRepository.findOneBy({
-        persId: dto.persId,
-      });
-
-      if (existingDoctor) {
-        throw new Error(`La persona ya está registrada como doctor`);
-      }
-
-      const doctor = this.doctorRepository.create(dto);
-      const savedDoctor = await queryRunner.manager.save(doctor);
-
-      await queryRunner.commitTransaction();
-      return savedDoctor;
-    } catch (error) {
-      await queryRunner.rollbackTransaction();
-      throw error;
-    } finally {
-      await queryRunner.release();
+    // 1. Verificar que la Persona existe
+    const persona = await this.personaRepository.findOne({
+      where: { persId: dto.persId },
+    });
+    if (!persona) {
+      throw new NotFoundException(`Persona #${dto.persId} no encontrada`);
     }
+
+    // 2. Buscar las entidades relacionadas (si se proporcionan IDs)
+    const vehiculo = dto.vehiId
+      ? await this.vehiculoRepository.findOne({
+          where: { vehiId: dto.vehiId },
+        })
+      : null;
+    const siisWeb = dto.siisWebId
+      ? await this.siisWebRepository.findOne({
+          where: { siisWebId: dto.siisWebId },
+        })
+      : null;
+
+    // 3. Crear y guardar el Paciente (mapeando todos los campos)
+    const doctor = this.doctorRepository.create({
+      persId: dto.persId,
+      docEstado: dto.docEstado || 'A',
+      docEspecialidad: dto.docEspecialidad,
+      docCelular: dto.docCelular,
+      docUsuario: dto.docUsuario,
+      vehiculo,
+      siisWeb,
+    });
+    return await this.doctorRepository.save(doctor);
   }
 
   async update(persId: number, dto: UpdateDoctorDto): Promise<Doctor> {
-    await this.findOne(persId); // Reutiliza la validación de existencia
-
-    const updated = await this.doctorRepository.preload({
-      persId,
-      ...dto,
+    const doctor = await this.doctorRepository.findOne({
+      where: { persId },
     });
 
-    if (!updated) {
+    if (!doctor) {
       throw new NotFoundException(`Doctor con ID ${persId} no encontrado`);
     }
 
-    return this.doctorRepository.save(updated);
+    this.doctorRepository.merge(doctor, {
+      docEstado: dto.docEstado,
+      docEspecialidad: dto.docEspecialidad,
+      docCelular: dto.docCelular,
+      docUsuario: dto.docUsuario,
+    });
+
+    return this.doctorRepository.save(doctor);
   }
 
   async delete(persId: number): Promise<void> {
-    // Soft delete (cambiar estado en lugar de borrar físicamente)
-    const result = await this.doctorRepository.update(
-      persId,
-      { docEstado: 'I' }, // Inactivo
-    );
-
-    if (result.affected === 0) {
-      throw new NotFoundException(`Doctor con ID ${persId} no encontrado`);
-    }
-  }
-
-  // Métodos adicionales específicos para doctores
-  async findByEspecialidad(especialidad: string): Promise<Doctor[]> {
-    return this.doctorRepository.find({
-      where: {
-        docEspecialidad: especialidad,
-        docEstado: 'A',
-      },
-      relations: ['persona'],
-    });
-  }
-
-  async findByUsuario(usuario: string): Promise<Doctor> {
-    return this.doctorRepository.findOne({
-      where: { docUsuario: usuario },
-      relations: ['persona'],
-    });
+    const doctor = await this.findOne(persId);
+    await this.doctorRepository.remove(doctor);
   }
 }

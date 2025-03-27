@@ -25,6 +25,22 @@ export class PacienteService {
     private readonly infoDomicilioRepository: Repository<InfoDomicilio>,
   ) {}
 
+  async findAll(): Promise<Paciente[]> {
+    return await this.pacienteRepository.find({
+      relations: ['persona', 'igob', 'smartwatch', 'infoDomicilio'],
+    });
+  }
+
+  async findOne(persId: number): Promise<Paciente> {
+    const paciente = await this.pacienteRepository.findOne({
+      where: { persId },
+      relations: ['persona', 'igob', 'smartwatch', 'infoDomicilio'],
+    });
+    if (!paciente)
+      throw new NotFoundException(`Paciente #${persId} no encontrado`);
+    return paciente;
+  }
+
   async create(dto: CreatePacienteDto): Promise<Paciente> {
     // 1. Verificar que la Persona existe
     const persona = await this.personaRepository.findOne({
@@ -86,22 +102,6 @@ export class PacienteService {
     });
 
     return await this.pacienteRepository.save(paciente);
-  }
-
-  async findAll(): Promise<Paciente[]> {
-    return await this.pacienteRepository.find({
-      relations: ['persona', 'igob', 'smartwatch', 'infoDomicilio'],
-    });
-  }
-
-  async findOne(persId: number): Promise<Paciente> {
-    const paciente = await this.pacienteRepository.findOne({
-      where: { persId },
-      relations: ['persona', 'igob', 'smartwatch', 'infoDomicilio'],
-    });
-    if (!paciente)
-      throw new NotFoundException(`Paciente #${persId} no encontrado`);
-    return paciente;
   }
 
   async delete(persId: number): Promise<void> {
