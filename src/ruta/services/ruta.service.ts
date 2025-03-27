@@ -16,22 +16,21 @@ export class RutaService {
   ) {}
 
   async create(dto: CreateRutaDto): Promise<Ruta> {
-    const siisWeb = dto.siisWebId
-      ? await this.siisWebRepository.findOne({
-          where: { siisWebId: dto.siisWebId },
-        })
-      : null;
+    //const siisWeb = dto.siisWebId
+    //  ? await this.siisWebRepository.findOne({
+    //      where: { siisWebId: dto.siisWebId },
+    //   })
+    //  : null;
 
-    if (dto.siisWebId && !siisWeb) {
-      throw new NotFoundException(`SiisWeb #${dto.siisWebId} no encontrado`);
-    }
+    //if (dto.siisWebId && !siisWeb) {
+    //  throw new NotFoundException(`SiisWeb #${dto.siisWebId} no encontrado`);
+    //}
 
     const newRuta = this.rutaRepository.create({
       rutaEstado: dto.rutaEstado || 'A',
       rutaOrigen: dto.rutaOrigen,
       rutaDestino: dto.rutaDestino,
-      rutaDuracionAprox: dto.rutaDuracionAprox,
-      siisWeb,
+      rutaDuracionAprox: dto.rutaDuracionAprox
     });
 
     return await this.rutaRepository.save(newRuta);
@@ -44,13 +43,13 @@ export class RutaService {
     });
     if (!ruta) throw new NotFoundException(`Ruta #${id} no encontrada`);
 
-    if (dto.siisWebId) {
-      ruta.siisWeb = await this.siisWebRepository.findOne({
-        where: { siisWebId: dto.siisWebId },
-      });
-      if (!ruta.siisWeb)
-        throw new NotFoundException(`SiisWeb #${dto.siisWebId} no encontrado`);
-    }
+    //if (dto.siisWebId) {
+    //  ruta.siisWeb = await this.siisWebRepository.findOne({
+    //    where: { siisWebId: dto.siisWebId },
+    //  });
+    //  if (!ruta.siisWeb)
+    //    throw new NotFoundException(`SiisWeb #${dto.siisWebId} no encontrado`);
+    //}
 
     this.rutaRepository.merge(ruta, dto);
     return await this.rutaRepository.save(ruta);

@@ -37,13 +37,4 @@ export class CreateRutaDto {
   @IsOptional()
   @IsInt()
   rutaDuracionAprox?: number;
-
-  @ApiProperty({
-    example: 1,
-    description: 'ID de referencia a Mec_siis_web',
-    required: false,
-  })
-  @IsOptional()
-  @IsInt()
-  siisWebId?: number;
 }
