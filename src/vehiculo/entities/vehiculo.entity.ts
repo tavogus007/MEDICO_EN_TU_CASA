@@ -1,9 +1,11 @@
+import { Doctor } from 'src/persona/entities/doctor.entity';
 import {
   Entity,
   PrimaryGeneratedColumn,
   Column,
   CreateDateColumn,
   UpdateDateColumn,
+  OneToMany,
 } from 'typeorm';
 
 @Entity({ name: 'mec_vehiculo', schema: 'medico_en_tu_casa_v2' })
@@ -54,4 +56,7 @@ export class Vehiculo {
     nullable: true,
   })
   vehiKilometraje: number | null;
+
+  @OneToMany(() => Doctor, (doctor) => doctor.vehiculo)
+  doctores: Doctor[];
 }

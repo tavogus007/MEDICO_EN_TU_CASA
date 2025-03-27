@@ -16,6 +16,6 @@ import { AdmisionTrabSocModule } from 'src/adm_ts/admision_trab-soc.module';
   ],
   providers: [AgendaService, FormularioService],
   controllers: [AgendaController, FormController],
-  exports: [], //*
+  exports: [TypeOrmModule], //*
 })
 export class AgendaModule {}

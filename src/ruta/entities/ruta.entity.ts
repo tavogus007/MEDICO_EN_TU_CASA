@@ -4,12 +4,13 @@ import {
   Column,
   CreateDateColumn,
   UpdateDateColumn,
-  ManyToOne,
-  JoinColumn,
   OneToMany,
+  OneToOne,
 } from 'typeorm';
 import { SiisWeb } from '../../sistema/entities/siis.entity';
 import { InfoDomicilio } from './infodom.entity';
+import { ConstruccionRuta } from './construta.entity';
+import { MapaRutas } from './maparuta.entity';
 
 @Entity({ name: 'mec_ruta', schema: 'medico_en_tu_casa_v2' })
 export class Ruta {
@@ -57,10 +58,17 @@ export class Ruta {
   })
   rutaDuracionAprox: number | null;
 
-  @ManyToOne(() => SiisWeb)
-  @JoinColumn({ name: 'siis_web_id' })
-  siisWeb: SiisWeb;
+  @OneToOne(() => SiisWeb, (siisWeb) => siisWeb.ruta)
+  siisWeb?: SiisWeb;
 
   @OneToMany(() => InfoDomicilio, (info) => info.ruta)
   infoDomicilio: InfoDomicilio[];
+
+  // Relación 1:N con ConstruccionRuta
+  @OneToMany(() => ConstruccionRuta, (construccion) => construccion.ruta)
+  construcciones: ConstruccionRuta[];
+
+  // Relación 1:N con MapaRutas
+  @OneToMany(() => MapaRutas, (mapa) => mapa.ruta)
+  mapas: MapaRutas[];
 }

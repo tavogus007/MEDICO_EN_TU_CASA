@@ -1,57 +1,92 @@
 import { ApiProperty } from '@nestjs/swagger';
+import {
+  IsInt,
+  IsOptional,
+  IsString,
+  Length,
+  MaxLength,
+} from 'class-validator';
 
 export class CreateAgendaDto {
   @ApiProperty({
-    description: 'El historico del paciente',
-    example: 'Histórico de ejemplo',
+    example: 'A',
+    description: 'Estado de la agenda (A=Activo, I=Inactivo)',
+    default: 'A',
+    required: false,
   })
-  age_historico: string;
+  @IsOptional()
+  @IsString()
+  @Length(1, 1)
+  ageEstado?: string;
 
   @ApiProperty({
-    description: 'La historia clínica del paciente',
-    example: 'Historia clínica de ejemplo',
+    example: 'Histórico médico completo',
+    description: 'Datos históricos del paciente',
+    required: false,
   })
-  age_historia_clinica: string;
-
-  @ApiProperty({ description: 'Indica si hay un diagnóstico', example: true })
-  age_diagnostico: boolean;
-
-  @ApiProperty({ description: 'Nombre del paciente', example: 'Juan Pérez' })
-  age_paciente: string;
+  @IsOptional()
+  @IsString()
+  ageHistorico?: string;
 
   @ApiProperty({
+    example: 'Historia clínica detallada...',
+    description: 'Historia clínica completa',
+    required: false,
+  })
+  @IsOptional()
+  @IsString()
+  ageHistoriaClinica?: string;
+
+  @ApiProperty({
+    example: 'Diagnóstico principal: Hipertensión',
+    description: 'Diagnóstico médico',
+    required: false,
+  })
+  @IsOptional()
+  @IsString()
+  ageDiagnostico?: string;
+
+  @ApiProperty({
+    example: 'Control de presión arterial',
     description: 'Razón de la consulta',
-    example: 'Dolor de cabeza',
+    required: true,
   })
-  age_razon_consulta: string;
+  @IsString()
+  ageRazonConsulta: string;
 
   @ApiProperty({
-    description: 'Número de celular de referencia',
-    example: 123456789,
+    example: 'F-2023-001',
+    description: 'Código de ficha',
+    required: false,
   })
-  age_celular_referencia: number;
+  @IsOptional()
+  @IsString()
+  @MaxLength(50)
+  ageCodFicha?: string;
 
   @ApiProperty({
-    description: 'Información del domicilio',
-    example: 'Calle Falsa 123',
+    example: 'Médico asignado: Dr. Pérez',
+    description: 'Médico o área asignada',
+    required: false,
   })
-  age_info_domicilio: string;
-
-  @ApiProperty({ description: 'Código de la ficha', example: 'FICHA123' })
-  age_cod_ficha: string;
-
-  @ApiProperty({ description: 'Indica si es mañana o tarde', example: false })
-  age_m_a: boolean;
+  @IsOptional()
+  @IsString()
+  @MaxLength(50)
+  ageMA?: string;
 
   @ApiProperty({
-    description: 'Clave foranea hacia admisiones',
-    example: 123,
+    example: 1,
+    description: 'ID de admisión relacionada',
+    required: true,
   })
-  age_admision_id: number | null;
+  @IsInt()
+  admisionId: number;
 
   @ApiProperty({
-    description: 'Clave foranea hacia trabajo social',
-    example: 123,
+    example: 2,
+    description: 'ID de trabajo social relacionado',
+    required: true,
   })
-  age_ts_id: number | null;
+  @IsInt()
+  tsId: number;
 }

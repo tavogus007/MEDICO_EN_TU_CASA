@@ -23,6 +23,13 @@ import { InfoDomicilio } from './ruta/entities/infodom.entity';
 import { Ruta } from './ruta/entities/ruta.entity';
 import { Paciente } from './persona/entities/paciente.entity';
 import { RutaModule } from './ruta/ruta.module';
+import { ConstruccionRuta } from './ruta/entities/construta.entity';
+import { MapaRutas } from './ruta/entities/maparuta.entity';
+import { Historial } from './historial/entities/historial.entity';
+import { HistorialModule } from './historial/historial.module';
+import { Agenda } from './agenda/entities/agenda.entity';
+import { AgendaModule } from './agenda/agenda.module';
+import { Doctor } from './persona/entities/doctor.entity';
 
 @Module({
   imports: [
@@ -66,6 +73,11 @@ import { RutaModule } from './ruta/ruta.module';
           InfoDomicilio,
           Ruta,
           Paciente,
+          ConstruccionRuta,
+          MapaRutas,
+          Historial,
+          Agenda,
+          Doctor,
         ],
         synchronize: false, // solo en modo desarrollo
       }),
@@ -78,6 +90,8 @@ import { RutaModule } from './ruta/ruta.module';
     SmartwatchModule,
     InfopagoModule,
     RutaModule,
+    HistorialModule,
+    AgendaModule,
   ],
   controllers: [],
   providers: [],

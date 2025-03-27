@@ -1,75 +1,101 @@
 import { ApiProperty } from '@nestjs/swagger';
 import {
   Column,
+  CreateDateColumn,
   Entity,
-  JoinColumn,
-  ManyToOne,
+  OneToOne,
+  // OneToOne,
   PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from 'typeorm';
 
-import { Admisiones } from '../../adm_ts/entities/admisiones.entity';
-import { TrabajoSocial } from '../../adm_ts/entities/trabajoSoclal.entity';
+// import { Admisiones } from '../../adm_ts/entities/admisiones.entity';
+// import { TrabajoSocial } from '../../adm_ts/entities/trabajoSoclal.entity';
+import { SiisWeb } from '../../sistema/entities/siis.entity';
 
-@Entity({ name: 'mec_agenda', schema: 'medico_en_tu_casa' })
+@Entity({ name: 'mec_agenda', schema: 'medico_en_tu_casa_v2' })
 export class Agenda {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn({ name: 'age_id' })
   age_id: number;
 
-  @ApiProperty({ description: 'El historico del paciente' })
-  @Column({ type: 'varchar', length: 50 })
-  age_historico: string;
-
-  @ApiProperty({ description: 'Historia clinica del paciente' })
-  @Column({ type: 'varchar', length: 50 })
-  age_historia_clinica: string;
-
-  @ApiProperty({ description: 'Tiene diagnostico' })
-  @Column({ type: 'boolean' })
-  age_diagnostico: boolean;
-
-  @ApiProperty({ description: 'Identificador paciente' })
-  @Column({ type: 'varchar', length: 50 })
-  age_paciente: string;
-
-  @ApiProperty({ description: 'Razon de la consulta' })
-  @Column({ type: 'varchar', length: 100 })
-  age_razon_consulta: string;
-
-  @ApiProperty({ description: 'Celular de referencia' })
-  @Column({ type: 'integer' })
-  age_celular_referencia: number;
-
-  @ApiProperty({ description: 'Informacion del domicilio' })
-  @Column({ type: 'varchar', length: 100 })
-  age_info_domicilio: string;
-
-  @ApiProperty({ description: 'codigo de ficha' })
-  @Column({ type: 'varchar', length: 15 })
-  age_cod_ficha: string;
-
-  @ApiProperty({ description: 'Requiere monitoreo avanzado' })
-  @Column({ type: 'boolean' })
-  age_m_a: boolean;
-
-  @ApiProperty({ description: 'Clave foranea a admision' })
-  @Column({ type: 'integer', nullable: true })
-  age_admision_id: number | null;
-
-  @ApiProperty({ description: 'Clave foranea a trabajo social' })
-  @Column({ type: 'integer', nullable: true })
-  age_ts_id: number | null;
-
-  @ManyToOne(() => Admisiones, (admision) => admision.agendas)
-  @JoinColumn({
-    name: 'age_admision_id',
-    referencedColumnName: 'admision_id',
+  @CreateDateColumn({
+    name: 'age_registrado',
+    type: 'timestamp',
+    default: () => 'CURRENT_TIMESTAMP',
   })
-  admision?: Admisiones;
+  ageRegistrado: Date;
 
-  @ManyToOne(() => TrabajoSocial, (trabSoc) => trabSoc.agendas)
-  @JoinColumn({
-    name: 'age_ts_id',
-    referencedColumnName: 'ts_id',
+  @UpdateDateColumn({
+    name: 'age_modificado',
+    type: 'timestamp',
+    nullable: true,
   })
-  trabSoc?: TrabajoSocial;
+  ageModificado: Date | null;
+
+  @ApiProperty({ description: 'Estado de la agenda' })
+  @Column({
+    name: 'age_estado',
+    type: 'char',
+    length: 1,
+    default: 'A',
+  })
+  ageEstado: string;
+
+  @Column({
+    name: 'age_historico',
+    type: 'text',
+    nullable: true,
+  })
+  ageHistorico: string | null;
+
+  @Column({
+    name: 'age_historia_clinica',
+    type: 'text',
+    nullable: true,
+  })
+  ageHistoriaClinica: string | null;
+
+  @Column({
+    name: 'age_diagnostico',
+    type: 'text',
+    nullable: true,
+  })
+  ageDiagnostico: string | null;
+
+  @Column({
+    name: 'age_razon_consulta',
+    type: 'text',
+    nullable: true,
+  })
+  ageRazonConsulta: string | null;
+
+  @Column({
+    name: 'age_cod_ficha',
+    type: 'varchar',
+    length: 50,
+    nullable: true,
+  })
+  ageCodFicha: string | null;
+
+  @Column({
+    name: 'age_m_a',
+    type: 'varchar',
+    length: 50,
+    nullable: true,
+  })
+  ageMA: string | null;
+
+  // // Relación ManyToOne con Admision
+  // @ManyToOne(() => Admisiones)
+  // @JoinColumn({ name: 'admision_id' })
+  // admision: Admisiones;
+
+  // Relación ManyToOne con TrabajoSocial
+  // @ManyToOne(() => TrabajoSocial)
+  // @JoinColumn({ name: 'ts_id' })
+  // trabSoc: TrabajoSocial;
+
+  // Relación 1:1 inversa con SiisWeb (opcional)
+  @OneToOne(() => SiisWeb, (siisWeb) => siisWeb.agenda)
+  siisWeb: SiisWeb;
 }
