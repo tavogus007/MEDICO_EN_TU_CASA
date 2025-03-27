@@ -15,8 +15,18 @@ import { HospitalMunicService } from './services/hospital-munic.service';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Macrodistrito, Distrito, Zona])],
-  providers: [MacrodistritoService, DistritoService, ZonaService, HospitalMunicService],
-  controllers: [MacrodistritoController, DistritoController, ZonaController, HospitalMunicController],
+  providers: [
+    MacrodistritoService,
+    DistritoService,
+    ZonaService,
+    HospitalMunicService,
+  ],
+  controllers: [
+    MacrodistritoController,
+    DistritoController,
+    ZonaController,
+    HospitalMunicController,
+  ],
   exports: [],
 })
 export class GeograficoModule {}

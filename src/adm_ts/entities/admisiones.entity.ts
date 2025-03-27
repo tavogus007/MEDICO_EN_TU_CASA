@@ -1,9 +1,9 @@
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 
-import { Agenda } from '../../agenda/entities/agenda.entity';
+// import { Agenda } from '../../agenda/entities/agenda.entity';
 
-@Entity({ name: 'mec_admision', schema: 'medico_en_tu_casa' })
+@Entity({ name: 'mec_admision', schema: 'medico_en_tu_casa_v2' })
 export class Admisiones {
   @PrimaryGeneratedColumn({ name: 'admision_id' })
   admision_id: number;
@@ -36,6 +36,6 @@ export class Admisiones {
   @Column({ name: 'admision_hsp_id' })
   admisionhHsp_id: number;
 
-  @OneToMany(() => Agenda, (agenda) => agenda.admision)
-  agendas?: Agenda[];
+  // @OneToMany(() => Agenda, (agenda) => agenda.admision)
+  // agendas?: Agenda[];
 }

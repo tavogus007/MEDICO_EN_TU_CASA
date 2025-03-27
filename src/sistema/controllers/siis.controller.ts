@@ -10,7 +10,7 @@ import {
   Delete,
 } from '@nestjs/common';
 
-import { SiisService } from '../services/siis.service';
+import { SiisWebService } from '../services/siis.service';
 import { SiisWeb } from '../entities/siis.entity';
 import { UpdateSiisWebDto } from '../dtos/siis-update.dto';
 import { CreateSiisWebDto } from '../dtos/siis-create.dtos';
@@ -18,7 +18,7 @@ import { ApiOperation } from '@nestjs/swagger';
 
 @Controller('siis')
 export class SiisController {
-  constructor(private readonly mecSiisWebService: SiisService) {}
+  constructor(private readonly mecSiisWebService: SiisWebService) {}
 
   @Get()
   @ApiOperation({ summary: 'Listar todos los sistemas web' })

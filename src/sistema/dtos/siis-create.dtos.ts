@@ -1,15 +1,42 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsOptional, IsString, Length } from 'class-validator';
+import { IsOptional, IsInt, IsString, Length } from 'class-validator';
 
 export class CreateSiisWebDto {
   @ApiProperty({
-    type: String,
-    description: 'Estado del SIIS Web',
-    required: true,
+    example: 'A',
+    description: 'Estado del registro (A=Activo, I=Inactivo)',
     default: 'A',
+    required: false,
   })
   @IsOptional()
   @IsString()
   @Length(1, 1)
-  siisWebEstado: string;
+  siisWebEstado?: string;
+
+  @ApiProperty({
+    example: 1,
+    description: 'ID de la agenda relacionada (1:1)',
+    required: false,
+  })
+  @IsOptional()
+  @IsInt()
+  ageId?: number;
+
+  @ApiProperty({
+    example: 1,
+    description: 'ID de la ruta relacionada (1:1)',
+    required: false,
+  })
+  @IsOptional()
+  @IsInt()
+  rutaId?: number;
+
+  @ApiProperty({
+    example: 1,
+    description: 'ID del historial relacionado (1:1)',
+    required: false,
+  })
+  @IsOptional()
+  @IsInt()
+  histoId?: number;
 }
