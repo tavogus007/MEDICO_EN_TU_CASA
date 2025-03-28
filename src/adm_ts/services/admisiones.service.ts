@@ -1,9 +1,9 @@
-// mec-admisiones.service.ts
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
 import { Admisiones } from '../entities/admisiones.entity';
+import { Persona } from '../../persona/entities/persona.entity';
 import { CreateAdmisionDto } from '../dtos/create-admision.dto';
 import { UpdateAdmisionDto } from '../dtos/update-admision.dto';
 
@@ -11,32 +11,67 @@ import { UpdateAdmisionDto } from '../dtos/update-admision.dto';
 export class AdmisionesService {
   constructor(
     @InjectRepository(Admisiones)
-    private readonly mecAdmisionesRepository: Repository<Admisiones>,
+    private readonly admisionesRepository: Repository<Admisiones>,
+    @InjectRepository(Persona)
+    private readonly personaRepository: Repository<Persona>,
   ) {}
 
   async findAll(): Promise<Admisiones[]> {
-    return this.mecAdmisionesRepository.find({
-      relations: [],
+    return await this.admisionesRepository.find({
+      relations: ['persona'],
     });
   }
 
-  async findOne(id: number): Promise<Admisiones> {
-    return this.mecAdmisionesRepository.findOne({
-      where: { admision_id: id },
+  async findOne(persId: number): Promise<Admisiones> {
+    const admision = await this.admisionesRepository.findOne({
+      where: { persId },
+      relations: ['persona'],
     });
+
+    if (!admision) {
+      throw new NotFoundException(`Admision con ID ${persId} no encontrado`);
+    }
+    return admision;
   }
 
   async create(dto: CreateAdmisionDto): Promise<Admisiones> {
-    const newAdmision = this.mecAdmisionesRepository.create(dto);
-    return this.mecAdmisionesRepository.save(newAdmision);
+    // 1. Verificar que la Persona existe
+    const persona = await this.personaRepository.findOne({
+      where: { persId: dto.persId },
+    });
+    if (!persona) {
+      throw new NotFoundException(`Persona #${dto.persId} no encontrada`);
+    }
+
+    // 2. Buscar las entidades relacionadas (si se proporcionan IDs)
+    // 3. Crear y guardar la Admision (mapeando todos los campos)
+    const admision = this.admisionesRepository.create({
+      persId: dto.persId,
+      admEstado: dto.admEstado || 'A',
+      admUsuario: dto.admUsuario,
+    });
+    return await this.admisionesRepository.save(admision);
   }
 
-  async update(id: number, dto: UpdateAdmisionDto): Promise<Admisiones> {
-    await this.mecAdmisionesRepository.update(id, dto);
-    return this.findOne(id);
+  async update(persId: number, dto: UpdateAdmisionDto): Promise<Admisiones> {
+    const admision = await this.admisionesRepository.findOne({
+      where: { persId },
+    });
+
+    if (!admision) {
+      throw new NotFoundException(`Admision con ID ${persId} no encontrado`);
+    }
+
+    this.admisionesRepository.merge(admision, {
+      admEstado: dto.admEstado,
+      admUsuario: dto.admUsuario,
+    });
+
+    return this.admisionesRepository.save(admision);
   }
 
-  async remove(id: number): Promise<void> {
-    await this.mecAdmisionesRepository.delete(id);
+  async delete(persId: number): Promise<void> {
+    const admision = await this.findOne(persId);
+    await this.admisionesRepository.remove(admision);
   }
 }
