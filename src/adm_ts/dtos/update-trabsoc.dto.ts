@@ -1,24 +1,24 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { IsOptional, IsString, Length } from 'class-validator';
 
 export class UpdateTrabajoSocialDto {
   @ApiProperty({
-    description: 'Identificador del trabajo social',
-    required: false,
-  })
-  ts_identificador?: string;
-
-  @ApiProperty({ description: 'Estado del trabajo social', required: false })
-  ts_estado?: string;
-
-  @ApiProperty({
-    description: 'ID del usuario que registró el trabajo social',
-    required: false,
-  })
-  ts_usuario_id?: number;
-
-  @ApiProperty({
-    description: 'ID del hospital asociado al trabajo social',
-    required: false,
-  })
-  ts_hsp_id?: number;
+      example: 'A',
+      description: 'Estado de trabajo social (A=Activo, I=Inactivo)',
+      required: false,
+    })
+    @IsOptional()
+    @IsString()
+    @Length(1, 1)
+    tsEstado?: string;
+  
+    @ApiProperty({
+      example: 'mgarcia',
+      description: 'Nombre de usuario de trabajo social',
+      required: false,
+    })
+    @IsOptional()
+    @IsString()
+    @Length(1, 50)
+    tsUsuario?: string;
 }

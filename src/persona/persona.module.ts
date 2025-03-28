@@ -13,7 +13,7 @@ import { RutaModule } from 'src/ruta/ruta.module';
 import { Doctor } from './entities/doctor.entity';
 import { DoctorService } from './services/doctor.service';
 import { DoctorController } from './controllers/doctor.controller';
-import { VehiculoModule } from 'src/vehiculo/vehiculo.module';
+import { VehiculoModule } from '../vehiculo/vehiculo.module';
 
 @Module({
   imports: [
@@ -25,6 +25,6 @@ import { VehiculoModule } from 'src/vehiculo/vehiculo.module';
   ],
   providers: [PersonaService, PacienteService, DoctorService],
   controllers: [PersonaController, PacienteController, DoctorController],
-  exports: [TypeOrmModule, PersonaService],
+  exports: [TypeOrmModule],
 })
 export class PersonaModule {}

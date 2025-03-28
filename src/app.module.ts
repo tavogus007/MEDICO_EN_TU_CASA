@@ -30,6 +30,9 @@ import { HistorialModule } from './historial/historial.module';
 import { Agenda } from './agenda/entities/agenda.entity';
 import { AgendaModule } from './agenda/agenda.module';
 import { Doctor } from './persona/entities/doctor.entity';
+import { AdmisionTrabSocModule } from './adm_ts/admision_trab-soc.module';
+import { Admisiones } from './adm_ts/entities/admisiones.entity';
+import { TrabajoSocial } from './adm_ts/entities/trabajoSoclal.entity';
 
 @Module({
   imports: [
@@ -78,6 +81,8 @@ import { Doctor } from './persona/entities/doctor.entity';
           Historial,
           Agenda,
           Doctor,
+          Admisiones,
+          TrabajoSocial,
         ],
         synchronize: false, // solo en modo desarrollo
       }),
@@ -92,6 +97,7 @@ import { Doctor } from './persona/entities/doctor.entity';
     RutaModule,
     HistorialModule,
     AgendaModule,
+    AdmisionTrabSocModule,
   ],
   controllers: [],
   providers: [],

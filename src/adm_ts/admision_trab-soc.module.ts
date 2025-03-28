@@ -7,9 +7,13 @@ import { AdmisionesController } from './controllers/admisiones.controller';
 import { TrabajoSocial } from './entities/trabajoSoclal.entity';
 import { TrabsocialService } from './services/trabsocial.service';
 import { TrabajoSocialController } from './controllers/trabajo-social.controller';
+import { PersonaModule } from '../persona/persona.module';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Admisiones, TrabajoSocial])],
+  imports: [
+    TypeOrmModule.forFeature([Admisiones, TrabajoSocial]),
+    PersonaModule,
+  ],
   providers: [AdmisionesService, TrabsocialService],
   controllers: [AdmisionesController, TrabajoSocialController],
   exports: [TypeOrmModule], // Esto permite que otros módulos usen esta entidad
